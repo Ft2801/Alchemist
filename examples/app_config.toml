@@ -1,0 +1,20 @@
+# Example application configuration in TOML
+
+[server]
+host = "127.0.0.1"
+port = 8080
+workers = 4
+
+[database]
+url = "postgres://user:pass@localhost:5432/db"
+max_connections = 50
+enabled = true
+
+[features]
+analytis = true
+beta_access = false
+
+[logging]
+level = "info"
+file = "/var/log/app.log"
+rotation_mb = 100

@@ -1,0 +1,19 @@
+{
+  "id": 1,
+  "name": "John Doe",
+  "email": "john@example.com",
+  "age": 30,
+  "active": true,
+  "balance": 1234.56,
+  "address": {
+    "street": "123 Main St",
+    "city": "New York",
+    "zipCode": "10001",
+    "country": "USA"
+  },
+  "roles": ["admin", "user"],
+  "metadata": {
+    "createdAt": "2024-01-15T10:30:00Z",
+    "updatedAt": "2024-01-16T14:22:00Z"
+  }
+}

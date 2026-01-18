@@ -1,0 +1,47 @@
+{
+    "productId": "prod_98765",
+    "name": "Ergonomic Office Chair",
+    "description": "A comfortable chair for long work hours.",
+    "price": {
+        "amount": 299.99,
+        "currency": "USD"
+    },
+    "inStock": true,
+    "categories": [
+        "Furniture",
+        "Office",
+        "Seating"
+    ],
+    "variants": [
+        {
+            "sku": "chair-black-mesh",
+            "color": "Black",
+            "material": "Mesh",
+            "priceAdjustment": 0
+        },
+        {
+            "sku": "chair-grey-fabric",
+            "color": "Grey",
+            "material": "Fabric",
+            "priceAdjustment": 20.00,
+            "limitedEdition": true
+        }
+    ],
+    "ratings": {
+        "average": 4.5,
+        "count": 128,
+        "reviews": [
+            {
+                "user": "user_555",
+                "rating": 5,
+                "comment": "Great chair!",
+                "date": "2023-09-15"
+            }
+        ]
+    },
+    "specs": {
+        "weightClass": "Up to 300lbs",
+        "adjustableHeight": true,
+        "lumbarSupport": "Adjustable"
+    }
+}

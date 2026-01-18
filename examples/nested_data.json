@@ -1,0 +1,22 @@
+{
+    "level1": {
+        "name": "Root",
+        "level2": {
+            "name": "Branch",
+            "level3": {
+                "name": "Leaf",
+                "level4": {
+                    "value": 42,
+                    "active": true,
+                    "meta": {
+                        "id": "deep-node-1",
+                        "tags": [
+                            "deep",
+                            "nested"
+                        ]
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,153 @@
+//! Python Pydantic model generator
+
+use crate::ast::{FieldType, Schema, TypeDef};
+use crate::error::{AlchemistError, Result};
+use crate::generators::{CodeGenerator, GeneratorOptions};
+use crate::utils::to_snake_case;
+
+/// Python Pydantic generator
+pub struct PythonGenerator {
+    options: GeneratorOptions,
+}
+
+impl PythonGenerator {
+    /// Create a new Python generator with the given options
+    pub fn new(options: GeneratorOptions) -> Self {
+        Self { options }
+    }
+
+    /// Generate a Python class from a type definition
+    fn generate_class(&self, type_def: &TypeDef) -> String {
+        let mut output = String::new();
+
+        output.push_str(&format!("class {}(BaseModel):\n", type_def.name));
+
+        if let Some(doc) = &type_def.doc {
+            output.push_str(&format!("    \"\"\"\n    {}\n    \"\"\"\n", doc));
+        }
+
+        if type_def.fields.is_empty() {
+            output.push_str("    pass\n");
+            return output;
+        }
+
+        for field in &type_def.fields {
+            // Raw JSON name
+            let raw_name = &field.name;
+
+            // Pythonic snake_case name
+            let snake_name = to_snake_case(raw_name);
+            let safe_name = self.to_safe_identifier(&snake_name);
+
+            let python_type_str = self.field_type_to_python(&field.field_type);
+            let is_optional = field.optional || self.options.optional_fields;
+
+            let type_annotation = if is_optional {
+                format!("Optional[{}]", python_type_str)
+            } else {
+                python_type_str
+            };
+
+            // Determine if we need an alias (if renamed or contains invalid chars)
+            let needs_alias = safe_name != *raw_name;
+
+            if needs_alias {
+                let default_val = if is_optional {
+                    format!("Field(None, alias=\"{}\")", raw_name)
+                } else {
+                    format!("Field(..., alias=\"{}\")", raw_name)
+                };
+                output.push_str(&format!(
+                    "    {}: {} = {}\n",
+                    safe_name, type_annotation, default_val
+                ));
+            } else {
+                let default_val = if is_optional { " = None" } else { "" };
+                output.push_str(&format!(
+                    "    {}: {}{}\n",
+                    safe_name, type_annotation, default_val
+                ));
+            }
+        }
+        output.push('\n');
+
+        output
+    }
+
+    fn to_safe_identifier(&self, name: &str) -> String {
+        match name {
+            "class" | "def" | "return" | "pass" | "from" | "import" | "type" | "None" | "True"
+            | "False" | "and" | "as" | "assert" | "async" | "await" | "break" | "continue"
+            | "del" | "elif" | "else" | "except" | "finally" | "for" | "global" | "if" | "in"
+            | "is" | "lambda" | "nonlocal" | "not" | "or" | "raise" | "try" | "while" | "with"
+            | "yield" => format!("{}_", name),
+            _ => name.to_string(),
+        }
+    }
+
+    /// Convert AST FieldType to Python type string
+    fn field_type_to_python(&self, field_type: &FieldType) -> String {
+        match field_type {
+            FieldType::String => "str".to_string(),
+            FieldType::Integer => "int".to_string(),
+            FieldType::Float => "float".to_string(),
+            FieldType::Boolean => "bool".to_string(),
+            FieldType::Null => "Optional[Any]".to_string(),
+            FieldType::Array(inner) => {
+                format!("List[{}]", self.field_type_to_python(inner))
+            }
+            FieldType::Optional(inner) => self.field_type_to_python(inner),
+            FieldType::Reference(name) => format!("'{}'", name), // String forward reference
+            FieldType::Union(types) => {
+                let types_str = types
+                    .iter()
+                    .map(|t| self.field_type_to_python(t))
+                    .collect::<Vec<_>>()
+                    .join(", ");
+                format!("Union[{}]", types_str)
+            }
+            FieldType::Any => "Any".to_string(),
+            FieldType::Map(key, value) => {
+                format!(
+                    "Dict[{}, {}]",
+                    self.field_type_to_python(key),
+                    self.field_type_to_python(value)
+                )
+            }
+        }
+    }
+}
+
+impl CodeGenerator for PythonGenerator {
+    fn generate(&self, schema: &Schema) -> Result<String> {
+        if schema.types.is_empty() {
+            return Err(AlchemistError::GenerationError(
+                "Schema has no types to generate".to_string(),
+            ));
+        }
+
+        let mut output = String::new();
+
+        // Add imports
+        output.push_str("from typing import List, Optional, Any, Dict, Union\n");
+        output.push_str("from pydantic import BaseModel, Field\n\n");
+
+        output.push_str("# Generated by Alchemist\n");
+        output.push_str("# Do not edit manually\n\n");
+
+        // Generate types
+        for type_def in schema.types.iter().rev() {
+            output.push_str(&self.generate_class(type_def));
+        }
+
+        Ok(output)
+    }
+
+    fn file_extension(&self) -> &'static str {
+        "py"
+    }
+
+    fn name(&self) -> &'static str {
+        "Python (Pydantic)"
+    }
+}

@@ -1,0 +1,22 @@
+# Build artifacts
+/target/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Generated output (from running alchemist)
+*.generated.rs
+*.generated.ts
+output.ts
+output.rs
+my_types.ts
+# Tool metadata
+.agent/
+.gemini/

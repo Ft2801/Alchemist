@@ -1,0 +1,118 @@
+{
+    "users": {
+        "u01": {
+            "name": "Alice",
+            "role": "admin",
+            "active": true
+        },
+        "u02": {
+            "name": "Bob",
+            "role": "user",
+            "active": true
+        },
+        "u03": {
+            "name": "Charlie",
+            "role": "user",
+            "active": false
+        },
+        "u04": {
+            "name": "David",
+            "role": "user",
+            "active": true
+        },
+        "u05": {
+            "name": "Eve",
+            "role": "user",
+            "active": true
+        },
+        "u06": {
+            "name": "Frank",
+            "role": "user",
+            "active": true
+        },
+        "u07": {
+            "name": "Grace",
+            "role": "user",
+            "active": true
+        },
+        "u08": {
+            "name": "Heidi",
+            "role": "user",
+            "active": false
+        },
+        "u09": {
+            "name": "Ivan",
+            "role": "user",
+            "active": true
+        },
+        "u10": {
+            "name": "Judy",
+            "role": "user",
+            "active": true
+        },
+        "u11": {
+            "name": "Kevin",
+            "role": "user",
+            "active": true
+        },
+        "u12": {
+            "name": "Liam",
+            "role": "user",
+            "active": true
+        },
+        "u13": {
+            "name": "Mallory",
+            "role": "user",
+            "active": false
+        },
+        "u14": {
+            "name": "Niaj",
+            "role": "user",
+            "active": true
+        },
+        "u15": {
+            "name": "Olivia",
+            "role": "user",
+            "active": true
+        },
+        "u16": {
+            "name": "Peggy",
+            "role": "user",
+            "active": true
+        },
+        "u17": {
+            "name": "Quentin",
+            "role": "user",
+            "active": true
+        },
+        "u18": {
+            "name": "Rupert",
+            "role": "user",
+            "active": false
+        },
+        "u19": {
+            "name": "Sybil",
+            "role": "user",
+            "active": true
+        },
+        "u20": {
+            "name": "Trent",
+            "role": "user",
+            "active": true
+        },
+        "u21": {
+            "name": "Victor",
+            "role": "user",
+            "active": true
+        },
+        "u22": {
+            "name": "Walter",
+            "role": "user",
+            "active": true
+        }
+    },
+    "config": {
+        "debug": true,
+        "timeout": 5000
+    }
+}

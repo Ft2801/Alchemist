@@ -1,0 +1,27 @@
+{
+    "users": [
+        {
+            "id": 1,
+            "name": "John Doe",
+            "email": "john@example.com",
+            "age": 30,
+            "premium": true
+        },
+        {
+            "id": 2,
+            "name": "Jane Smith",
+            "age": 25,
+            "nickname": "Janie"
+        },
+        {
+            "id": 3,
+            "name": "Bob Wilson",
+            "email": "bob@example.com",
+            "department": "Engineering"
+        }
+    ],
+    "metadata": {
+        "total": 3,
+        "page": 1
+    }
+}

@@ -1,0 +1,38 @@
+{
+    "status": "success",
+    "data": {
+        "users": [
+            {
+                "id": 1,
+                "name": "Alice",
+                "roles": [
+                    "admin",
+                    "editor"
+                ],
+                "preferences": {
+                    "theme": "dark",
+                    "notifications": true
+                }
+            },
+            {
+                "id": 2,
+                "name": "Bob",
+                "roles": [
+                    "viewer"
+                ],
+                "lastLogin": "2023-10-27T10:00:00Z"
+            }
+        ],
+        "pagination": {
+            "total": 100,
+            "perPage": 20,
+            "current": 1,
+            "next": "https://api.example.com/users?page=2"
+        }
+    },
+    "errors": null,
+    "meta": {
+        "requestId": "req_123456",
+        "latency": 45
+    }
+}

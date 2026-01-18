@@ -1,0 +1,11 @@
+{
+    "appName": "Alchemist",
+    "version": "1.0.0",
+    "debug": true,
+    "maxRetries": 3,
+    "timeout": 5000,
+    "features": {
+        "logging": true,
+        "metrics": false
+    }
+}
